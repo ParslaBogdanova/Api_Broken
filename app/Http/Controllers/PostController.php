@@ -21,7 +21,7 @@ class PostController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return Post()->all();
+        return Post::all();
     }
 
     /**
@@ -32,10 +32,9 @@ class PostController extends Controller implements HasMiddleware
         $fields = $request->validate([
             'title' => 'required|max:255',
             'body' => 'required',
-            'password' => 'required'
         ]);
 
-        $post = Post::create($fields);
+        $post = $request->user()->posts()->create($fields);
 
         return $post;
     }
